@@ -16,7 +16,7 @@ class ExpensesApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   // ignore: unused_field
-  final _transaction = [
+  final _transactions = [
     Transaction(
         id: 't1',
         title: 'Novo Tenis de corrida',
@@ -46,8 +46,12 @@ class MyHomePage extends StatelessWidget {
               child: const Text('Grafico...'),
             ),
           ),
-          Card(
-            child: const Text('Lista de transacoes...'),
+          Column(
+            children: _transactions.map((tr) {
+              return Card(
+                child: Text(tr.title),
+              );
+            }).toList(),
           )
         ],
       ),
