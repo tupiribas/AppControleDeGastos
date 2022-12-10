@@ -51,6 +51,7 @@ class MyHomePage extends StatelessWidget {
               return Card(
                 child: Row(
                   children: <Widget>[
+                    // PREÇO
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
@@ -65,10 +66,21 @@ class MyHomePage extends StatelessWidget {
                             color: Colors.purple),
                       ),
                     ),
+                    // TITULO E DATA
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(tr.title),
-                        Text(tr.date.toString())
+                        Text(
+                          tr.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          tr.date.toString(),
+                          style: const TextStyle(color: Colors.grey),
+                        )
                       ],
                     )
                   ],
