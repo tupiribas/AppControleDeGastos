@@ -1,3 +1,4 @@
+import 'package:expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
@@ -9,14 +10,23 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
-    );
+    return MaterialApp(home: MyHomePage());
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  // ignore: unused_field
+  final _transaction = [
+    Transaction(
+        id: 't1',
+        title: 'Novo Tenis de corrida',
+        value: 310.70,
+        date: DateTime.now()),
+    Transaction(
+        id: 't2', title: 'Conta de luz', value: 151.15, date: DateTime.now()),
+  ];
+
+  MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +37,11 @@ class MyHomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget> [
+        children: <Widget>[
           SizedBox(
             width: double.infinity,
             child: Card(
-              color: Colors.blue[100],
+              color: Colors.blue[500],
               elevation: 5,
               child: const Text('Grafico...'),
             ),
