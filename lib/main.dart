@@ -16,7 +16,9 @@ class ExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  // ignore: unused_field
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
+
   final _transactions = [
     Transaction(
         id: 't1',
@@ -36,7 +38,6 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Despesas Pessoais'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(
@@ -79,7 +80,8 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          DateFormat('d MMM y').format(tr.date),// '${tr.date.toString()}',
+                          DateFormat('d MMM y')
+                              .format(tr.date), // '${tr.date.toString()}',
                           style: const TextStyle(color: Colors.grey),
                         )
                       ],
@@ -88,6 +90,46 @@ class MyHomePage extends StatelessWidget {
                 ),
               );
             }).toList(),
+          ),
+          // FORMULARIO
+          Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // INPUT TITULO
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Título',
+                    ),
+                  ),
+                  // INPUT VALOR
+                  TextField(
+                    controller: valueController,
+                    decoration: const InputDecoration(
+                      labelText: 'Valor (R\$)',
+                    ),
+                  ),
+                  // BOTAO PARA CADASTRAR UMA NOVA TRANSACAO
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          print(titleController.text);
+                          print(valueController.text);
+                        },
+                        child: const Text('Nova Transação',
+                            style: TextStyle(color: Colors.purple)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           )
         ],
       ),
