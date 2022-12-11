@@ -1,5 +1,11 @@
-import './components/transaction_user.dart';
+import 'dart:math';
+
+import 'package:expenses/components/transaction_form.dart';
+import 'package:expenses/models/transaction.dart';
+
 import 'package:flutter/material.dart';
+
+import 'components/transaction_list.dart';
 
 void main(List<String> args) {
   runApp(const ExpensesApp());
@@ -14,11 +20,52 @@ class ExpensesApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   final titleController = TextEditingController();
   final valueController = TextEditingController();
 
-  MyHomePage({super.key});
+  final _transactions = [
+    Transaction(
+        id: 't1',
+        title: 'Novo Tenis de corrida',
+        value: 310.70,
+        date: DateTime.now()),
+    Transaction(
+        id: 't2', title: 'Conta de luz', value: 151.15, date: DateTime.now()),
+    Transaction(
+        id: 't3', title: 'Conta #01', value: 11.15, date: DateTime.now()),
+    Transaction(
+        id: 't4', title: 'Conta #02', value: 201.15, date: DateTime.now()),
+    Transaction(id: 't5', title: 'Conta #03', value: 15, date: DateTime.now()),
+    Transaction(
+        id: 't6', title: 'Conta #04', value: 18.90, date: DateTime.now()),
+  ];
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return TransactionForm(onSubmit: null);
+      },
+    );
+  }
+
+  _addTransaction(String title, double value) {
+    final newTransaction = Transaction(
+        id: Random().nextDouble().toString(),
+        title: title,
+        value: value,
+        date: DateTime.now());
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +75,7 @@ class MyHomePage extends StatelessWidget {
         // BOTAO DE ADD DESPESA PESSOAL (SUPERIOR)
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
+            onPressed: () => _openTransactionFormModal(context),
             icon: const Icon(Icons.add),
           )
         ],
@@ -45,7 +92,7 @@ class MyHomePage extends StatelessWidget {
                 child: const Text('Grafico...'),
               ),
             ),
-            const TransactionUserState()
+            TransactionList(transactions: _transactions),
           ],
         ),
       ),
@@ -53,7 +100,7 @@ class MyHomePage extends StatelessWidget {
       // BOTAO DE ADD DESPESA PESSOAL (INFERIOR)
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _openTransactionFormModal(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
