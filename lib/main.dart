@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'dart:math';
 import './components/transaction_form.dart';
@@ -21,6 +19,7 @@ class Expenses extends StatelessWidget {
         colorScheme: tema.colorScheme.copyWith(
           primary: Colors.purple,
           secondary: Colors.amber,
+          secondaryContainer: Colors.black
         ),
         textTheme: tema.textTheme.copyWith(
           headline6: const TextStyle(
@@ -119,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => _openTransactionFormModal(context),
+        onPressed: () => _openTransactionFormModal(context)
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
