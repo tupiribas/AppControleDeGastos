@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+
 import './components/transaction_form.dart';
 import './components/transaction_list.dart';
 import 'models/transaction.dart';
@@ -19,11 +21,10 @@ class Expenses extends StatelessWidget {
         colorScheme: tema.colorScheme.copyWith(
           primary: Colors.purple,
           secondary: Colors.amber,
-          secondaryContainer: Colors.black
         ),
         textTheme: tema.textTheme.copyWith(
-          headline6: const TextStyle(
-            fontFamily: 'OpenSans',
+          titleMedium: const TextStyle(
+            fontFamily: 'Quicksand',
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -31,7 +32,7 @@ class Expenses extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
-            fontFamily: 'OpenSans',
+            fontFamily: 'Quicksand',
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -42,6 +43,8 @@ class Expenses extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  final bool darkMode = true;
+
   const MyHomePage({super.key});
 
   @override
@@ -117,9 +120,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => _openTransactionFormModal(context)
-      ),
+          child: const Icon(Icons.add),
+          onPressed: () => _openTransactionFormModal(context)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

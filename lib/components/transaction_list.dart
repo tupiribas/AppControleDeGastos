@@ -35,10 +35,7 @@ class TransactionList extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Text(
                       'R\$ ${tr.value.toStringAsFixed(2)}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Theme.of(context).colorScheme.primary),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   // TITULO E DATA
@@ -47,10 +44,7 @@ class TransactionList extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         tr.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
                         DateFormat('d MMM y')
