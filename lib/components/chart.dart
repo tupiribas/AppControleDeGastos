@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 import 'package:expenses/models/transaction.dart';
@@ -8,13 +9,15 @@ class Chart extends StatelessWidget {
 
   List<Map<String, Object>> get groupedTransactions {
     return List.generate(7, (index) {
-      // Dia da semana: subtrai o dia atual pela quantidade de dias
+      // Formatação:
+      // Dia da semana: subtrai o dia atual pelo dia atual
       final weekDay = DateTime.now().subtract(Duration(days: index));
-
       // Formata o dia da semana
-      final weekDayFormat = DateFormat.E().format(weekDay)[0];
+      final weekDayFormat =
+          DateFormat.E('pt_BR').format(weekDay)[0].toUpperCase();
 
-      // Soma dos valores
+      // Reconhece a ultima transação feita e adiciona o valor da transação ao
+      // dia expecífico.
       double totalSum = 0.0;
       for (var i = 0; i < recentTransaction.length; i++) {
         bool sameDay = recentTransaction[i].date.day == weekDay.day;
@@ -30,7 +33,7 @@ class Chart extends StatelessWidget {
       print(totalSum);
       print(weekDayFormat);
 
-      return {'day': weekDayFormat, 'value': 9.99};
+      return {'day': weekDayFormat, 'value': totalSum};
     });
   }
 
@@ -38,6 +41,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    groupedTransactions;
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
