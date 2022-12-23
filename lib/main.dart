@@ -1,4 +1,5 @@
 import 'dart:math';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:expenses/components/chart.dart';
@@ -18,7 +19,7 @@ class Expenses extends StatelessWidget {
     final ThemeData tema = ThemeData();
 
     return MaterialApp(
-      // Aceita formato Brasileiro 
+      // Aceita formato Brasileiro
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -57,22 +58,35 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
     Transaction(
+      id: 't0',
+      title: 'rita',
+      value: 1000,
+      date: DateTime.now().subtract(const Duration(days: 3)),
+    ),
+    Transaction(
       id: 't1',
       title: 'Novo Tênis de Corrida',
       value: 310.76,
-      date: DateTime.now().subtract(Duration(days: 3)),
+      date: DateTime.now().subtract(const Duration(days: 2)),
     ),
     Transaction(
       id: 't2',
       title: 'Conta de Luz',
       value: 211.30,
-      date: DateTime.now().subtract(Duration(days: 4)),
+      date: DateTime.now().subtract(const Duration(days: 1)),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Conta de Luz',
+      value: 11.30,
+      date: DateTime.now(),
     ),
   ];
 
