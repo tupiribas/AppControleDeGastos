@@ -7,25 +7,16 @@ import 'dart:math';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String) onRemove;
 
   const TransactionList({
     Key? key,
     required this.transactions,
+    required this.onRemove,
   }) : super(key: key);
 
   String _formatTotalValue(double value) {
-    return 'R\$${
-      value >= pow(10, 3) && value < pow(10, 6)?
-        '${value.toString()[0]}K'
-
-        : value >= pow(10, 6) && value < pow(10, 12) ?
-        '${value.toString()[0]}M'
-
-        : value >= pow(10, 12)?
-        '${value.toString()[0]}T'
-
-        : value.toStringAsFixed(2)
-    }';
+    return 'R\$${value >= pow(10, 3) && value < pow(10, 6) ? '${value.toString()[0]}K' : value >= pow(10, 6) && value < pow(10, 12) ? '${value.toString()[0]}M' : value >= pow(10, 12) ? '${value.toString()[0]}T' : value.toStringAsFixed(2)}';
   }
 
   @override
@@ -68,7 +59,8 @@ class TransactionList extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(6),
                         child: FittedBox(
-                          child: Text(_formatTotalValue(tr.value),
+                          child: Text(
+                            _formatTotalValue(tr.value),
                             style: const TextStyle(color: Colors.white),
                           ),
                         ),
@@ -78,8 +70,11 @@ class TransactionList extends StatelessWidget {
                       tr.title,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    subtitle: Text(
-                      DateFormat('d MMM y').format(tr.date)
+                    subtitle: Text(DateFormat('d MMM y').format(tr.date)),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => onRemove(tr.id),
                     ),
                   ),
                 );
