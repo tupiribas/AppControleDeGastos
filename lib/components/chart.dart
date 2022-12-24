@@ -12,7 +12,7 @@ class Chart extends StatelessWidget {
   List<Map<String, Object>> get groupedTransactions {
     return List.generate(7, (index) {
       // Formatação do dia da semana
-      final weekDay = DateTime.now().subtract(Duration(days: index));
+      final weekDay = DateTime.now().subtract(Duration(days: index - 1));
 
       // Reconhece a ultima transação feita e adiciona o valor da transação ao
       // dia expecífico.
