@@ -14,25 +14,19 @@ class ChartBar extends StatelessWidget {
   });
 
   String get _formatTotalValue {
-    return '\$${
-      value >= pow(10, 3) && value < pow(10, 6)?
-        '${value.toString()[0]}K'
-
-        : value >= pow(10, 6) && value < pow(10, 12) ?
-        '${value.toString()[0]}M'
-
-        : value >= pow(10, 12)?
-        '${value.toString()[0]}T'
-
-        : value.toStringAsFixed(2)
-    }';
+    return '\$${value >= pow(10, 3) && value < pow(10, 6) ? '${value.toString()[0]}K' : value >= pow(10, 6) && value < pow(10, 12) ? '${value.toString()[0]}M' : value >= pow(10, 12) ? '${value.toString()[0]}T' : value.toStringAsFixed(2)}';
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(_formatTotalValue),
+        SizedBox(
+          height: 20,
+          child: FittedBox(
+            child: Text(_formatTotalValue),
+          ),
+        ),
         SizedBox(
           height: 60,
           width: 10,
@@ -61,7 +55,7 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        Text(weekDay),
+        Text(weekDay[0]),
       ],
     );
   }

@@ -12,7 +12,7 @@ class Chart extends StatelessWidget {
   List<Map<String, Object>> get groupedTransactions {
     return List.generate(7, (index) {
       // Formatação do dia da semana
-      final weekDay = DateTime.now().subtract(Duration(days: index + 1));
+      final weekDay = DateTime.now().subtract(Duration(days: index));
 
       // Reconhece a ultima transação feita e adiciona o valor da transação ao
       // dia expecífico.
@@ -27,11 +27,8 @@ class Chart extends StatelessWidget {
         }
       }
 
-      return {
-        'day': DateFormat('EEE', 'pt_Br').format(weekDay),
-        'value': totalSum
-      };
-    });
+      return {'day': DateFormat('E ', 'pt_BR').format(weekDay), 'value': totalSum};
+    }).reversed.toList();
   }
 
   double get _weekTotalValue {
@@ -44,18 +41,24 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: const EdgeInsets.all(7),
+      margin: const EdgeInsets.all(14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: groupedTransactions.map((tr) {
           return Flexible(
             fit: FlexFit.tight,
-            child: ChartBar(
-              weekDay: tr['day'].toString(),
-              value: tr['value'] as double,
-              percentage: _weekTotalValue == 0
-                  ? 0
-                  : (tr['value'] as double) / _weekTotalValue,
+            child: Container(
+              margin: const EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+              ),
+              child: ChartBar(
+                weekDay: tr['day'].toString(),
+                value: tr['value'] as double,
+                percentage: _weekTotalValue == 0
+                    ? 0
+                    : (tr['value'] as double) / _weekTotalValue,
+              ),
             ),
           );
         }).toList(),
