@@ -1,9 +1,10 @@
+// ignore_for_file: unnecessary_null_comparison, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   const TransactionForm({
     Key? key,
@@ -24,11 +25,11 @@ class _TransactionFormState extends State<TransactionForm> {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text) ?? 0.0;
 
-    if (title.isEmpty || value <= 0) {
+    if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.onSubmit(title, value);
+    widget.onSubmit(title, value, _selectedDate);
   }
 
   _showDatePicker() {
@@ -78,7 +79,6 @@ class _TransactionFormState extends State<TransactionForm> {
               height: 70,
               child: Row(
                 children: <Widget>[
-                  // ignore: unnecessary_null_comparison
                   Expanded(
                     child: Text(
                       _selectedDate == null

@@ -14,7 +14,13 @@ class ChartBar extends StatelessWidget {
   });
 
   String get _formatTotalValue {
-    return '\$${value >= pow(10, 3) && value < pow(10, 6) ? '${value.toString()[0]}K' : value >= pow(10, 6) && value < pow(10, 12) ? '${value.toString()[0]}M' : value >= pow(10, 12) ? '${value.toString()[0]}T' : value.toStringAsFixed(2)}';
+    return value >= pow(10, 3) && value < pow(10, 6)
+        ? '${value.toString()[0]}K'
+        : value >= pow(10, 6) && value < pow(10, 12)
+            ? '${value.toString()[0]}M'
+            : value >= pow(10, 12)
+                ? '${value.toString()[0]}T'
+                : value.toStringAsFixed(2);
   }
 
   @override
@@ -24,7 +30,12 @@ class ChartBar extends StatelessWidget {
         SizedBox(
           height: 20,
           child: FittedBox(
-            child: Text(_formatTotalValue),
+            child: Text(
+              _formatTotalValue,
+              style: const TextStyle(
+                fontFamily: 'Quicksand',
+              ),
+            ),
           ),
         ),
         SizedBox(
@@ -55,7 +66,12 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        Text(weekDay[0]),
+        Text(
+          weekDay,
+          style: const TextStyle(
+            fontFamily: 'Quicksand',
+          ),
+        ),
       ],
     );
   }
