@@ -22,7 +22,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
+      height: 640,
       child: transactions.isEmpty
           ? Container(
               margin: const EdgeInsets.only(top: 20),

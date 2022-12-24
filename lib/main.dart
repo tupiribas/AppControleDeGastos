@@ -121,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            // Fazer a transações mensais
             Chart(recentTransaction: _recentTransactions),
             TransactionList(transactions: _transactions, onRemove: _deleteByIdTransaction),
           ],
