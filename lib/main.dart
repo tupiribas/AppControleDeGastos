@@ -91,10 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _deleteByIdTransaction(String id) {
-      setState(() {
-        _transactions.removeWhere((tr) => tr.id == id);
-      });
-    }
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
+  }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -107,23 +107,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => _openTransactionFormModal(context),
+        ),
+      ],
+    );
+
+    // Altura - barra do app - barra de status
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _openTransactionFormModal(context),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // Fazer a transações mensais
-            Chart(recentTransaction: _recentTransactions),
-            TransactionList(transactions: _transactions, onRemove: _deleteByIdTransaction),
+            SizedBox(
+              height: availableHeight * 0.26,
+              child: Chart(recentTransaction: _recentTransactions),
+            ),
+            SizedBox(
+              height: availableHeight * 0.75,
+              child: TransactionList(
+                  transactions: _transactions,
+                  onRemove: _deleteByIdTransaction),
+            ),
           ],
         ),
       ),
