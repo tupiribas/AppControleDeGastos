@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
       date: DateTime.now(),
     ),
   ];
-
+  bool _showChart = false;
   // Filtra as transações recentes (por semana)
   // retorna verdadeiro ou falso
   List<Transaction> get _recentTransactions {
@@ -157,10 +157,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: Text('Despesas Pessoais',
-      style: TextStyle(
-        fontSize: 20 * MediaQuery.textScaleFactorOf(context),
-      ),),
+      title: Text(
+        'Despesas Pessoais',
+        style: TextStyle(
+          fontSize: 20 * MediaQuery.textScaleFactorOf(context),
+        ),
+      ),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.add),
@@ -180,17 +182,54 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // Fazer a transações mensais
-            SizedBox(
-              height: availableHeight * 0.26,
-              child: Chart(recentTransaction: _recentTransactions),
+            // Implementação! - Fazer a transações mensais
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                IconButton(
+                  icon: _showChart
+                      ? const Icon(
+                          Icons.remove_red_eye_rounded,
+                          color: Colors.purple,
+                        )
+                      : const Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: Colors.purple,
+                        ),
+                  onPressed: () {
+                    setState(() {
+                      if (_showChart) {
+                        _showChart = false;
+                      } else {
+                        _showChart = true;
+                      }
+                    });
+                  },
+                )
+                // -- AULA --
+                // Switch(
+                //   activeColor: Colors.amber,
+                //   value: _showChart,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       _showChart = value;
+                //     });
+                //   },
+                // ),
+              ],
             ),
-            SizedBox(
-              height: availableHeight * 0.74,
-              child: TransactionList(
-                  transactions: _transactions,
-                  onRemove: _deleteByIdTransaction),
-            ),
+            if (_showChart)
+              SizedBox(
+                height: availableHeight * 0.26,
+                child: Chart(recentTransaction: _recentTransactions),
+              ),
+            if (!_showChart)
+              SizedBox(
+                height: availableHeight * 0.74,
+                child: TransactionList(
+                    transactions: _transactions,
+                    onRemove: _deleteByIdTransaction),
+              ),
           ],
         ),
       ),
