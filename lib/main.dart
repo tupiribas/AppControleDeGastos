@@ -63,7 +63,56 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: 't1',
+      title: 'Validade1',
+      value: 33.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Validade2',
+      value: 32.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Validade3',
+      value: 34.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'Validade4',
+      value: 35.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't5',
+      title: 'Validade5',
+      value: 36.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't6',
+      title: 'Validade6',
+      value: 37.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't7',
+      title: 'Validade7',
+      value: 38000.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't8',
+      title: 'Validade8',
+      value: 3800.90,
+      date: DateTime.now(),
+    ),
+  ];
 
   // Filtra as transações recentes (por semana)
   // retorna verdadeiro ou falso
@@ -108,7 +157,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: const Text('Despesas Pessoais'),
+      title: Text('Despesas Pessoais',
+      style: TextStyle(
+        fontSize: 20 * MediaQuery.textScaleFactorOf(context),
+      ),),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.add),
@@ -134,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Chart(recentTransaction: _recentTransactions),
             ),
             SizedBox(
-              height: availableHeight * 0.75,
+              height: availableHeight * 0.74,
               child: TransactionList(
                   transactions: _transactions,
                   onRemove: _deleteByIdTransaction),
