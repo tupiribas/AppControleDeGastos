@@ -164,6 +164,33 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       actions: <Widget>[
+        // Botão para alternar a visualização: lista e gráfico
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            IconButton(
+              icon: _showChart
+                  ? const Icon(
+                      Icons.poll_rounded,
+                      color: Colors.amber,
+                    )
+                  : const Icon(
+                      Icons.poll_outlined,
+                      color: Colors.white,
+                    ),
+              onPressed: () {
+                setState(() {
+                  if (_showChart) {
+                    _showChart = false;
+                  } else {
+                    _showChart = true;
+                  }
+                });
+              },
+            )
+          ],
+        ),
+        // Botão alternativo para adicionar nova transação
         IconButton(
           icon: const Icon(Icons.add),
           onPressed: () => _openTransactionFormModal(context),
@@ -183,41 +210,6 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // Implementação! - Fazer a transações mensais
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  icon: _showChart
-                      ? const Icon(
-                          Icons.remove_red_eye_rounded,
-                          color: Colors.purple,
-                        )
-                      : const Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: Colors.purple,
-                        ),
-                  onPressed: () {
-                    setState(() {
-                      if (_showChart) {
-                        _showChart = false;
-                      } else {
-                        _showChart = true;
-                      }
-                    });
-                  },
-                )
-                // -- AULA --
-                // Switch(
-                //   activeColor: Colors.amber,
-                //   value: _showChart,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       _showChart = value;
-                //     });
-                //   },
-                // ),
-              ],
-            ),
             if (_showChart)
               SizedBox(
                 height: availableHeight * 0.26,
