@@ -1,5 +1,6 @@
 import 'dart:math';
 // ignore: depend_on_referenced_packages
+import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:expenses/components/chart.dart';
@@ -63,57 +64,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Validade1',
-      value: 33.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Validade2',
-      value: 32.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Validade3',
-      value: 34.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't4',
-      title: 'Validade4',
-      value: 35.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't5',
-      title: 'Validade5',
-      value: 36.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Validade6',
-      value: 37.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't7',
-      title: 'Validade7',
-      value: 38000.90,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't8',
-      title: 'Validade8',
-      value: 3800.90,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
+  // Transaction(
+  //   id: 't1',
+  //   title: 'Validade1',
+  //   value: 33.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't2',
+  //   title: 'Validade2',
+  //   value: 32.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't3',
+  //   title: 'Validade3',
+  //   value: 34.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't4',
+  //   title: 'Validade4',
+  //   value: 35.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't5',
+  //   title: 'Validade5',
+  //   value: 36.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't6',
+  //   title: 'Validade6',
+  //   value: 37.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't7',
+  //   title: 'Validade7',
+  //   value: 38000.90,
+  //   date: DateTime.now(),
+  // ),
+  // Transaction(
+  //   id: 't8',
+  //   title: 'Validade8',
+  //   value: 3800.90,
+  //   date: DateTime.now(),
+  // ),
+  // ];
+
   bool _showChart = false;
+
   // Filtra as transações recentes (por semana)
   // retorna verdadeiro ou falso
   List<Transaction> get _recentTransactions {
@@ -156,6 +159,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Modo paisagem
+    bool isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: Text(
         'Despesas Pessoais',
@@ -164,32 +171,33 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       actions: <Widget>[
-        // Botão para alternar a visualização: lista e gráfico
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            IconButton(
-              icon: _showChart
-                  ? const Icon(
-                      Icons.poll_rounded,
-                      color: Colors.amber,
-                    )
-                  : const Icon(
-                      Icons.poll_outlined,
-                      color: Colors.white,
-                    ),
-              onPressed: () {
-                setState(() {
-                  if (_showChart) {
-                    _showChart = false;
-                  } else {
-                    _showChart = true;
-                  }
-                });
-              },
-            )
-          ],
-        ),
+        if (isLandScape)
+          // Botão para alternar a visualização: lista e gráfico
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              IconButton(
+                icon: _showChart
+                    ? const Icon(
+                        Icons.poll_rounded,
+                        color: Colors.amber,
+                      )
+                    : const Icon(
+                        Icons.poll_outlined,
+                        color: Colors.white,
+                      ),
+                onPressed: () {
+                  setState(() {
+                    if (_showChart) {
+                      _showChart = false;
+                    } else {
+                      _showChart = true;
+                    }
+                  });
+                },
+              )
+            ],
+          ),
         // Botão alternativo para adicionar nova transação
         IconButton(
           icon: const Icon(Icons.add),
@@ -210,12 +218,12 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // Implementação! - Fazer a transações mensais
-            if (_showChart)
+            if (_showChart || !isLandScape)
               SizedBox(
-                height: availableHeight * 0.26,
+                height: availableHeight * (isLandScape ? 0.7 : 0.26),
                 child: Chart(recentTransaction: _recentTransactions),
               ),
-            if (!_showChart)
+            if (!_showChart || !isLandScape)
               SizedBox(
                 height: availableHeight * 0.74,
                 child: TransactionList(
