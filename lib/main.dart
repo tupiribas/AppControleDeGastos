@@ -1,8 +1,8 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, depend_on_referenced_packages
 
 import 'dart:math';
 import 'dart:io';
-// ignore: depend_on_referenced_packages
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison, depend_on_referenced_packages
 
+import 'package:expenses/components/adaptative_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -108,17 +109,16 @@ class _TransactionFormState extends State<TransactionForm> {
               // BOTAO PARA CADASTRAR UMA NOVA TRANSACAO
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: const Text(
-                      'Nova Transação',
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
-                        fontWeight: FontWeight.bold,
+                children: <Widget>[
+                  AdaptativeButton(
+                      widget: const Text(
+                        'Nova Transação',
+                        style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ),
+                      onPressed: _submitForm),
                 ],
               )
             ],
