@@ -1,6 +1,9 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:math';
 import 'dart:io';
 // ignore: depend_on_referenced_packages
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:expenses/components/chart.dart';
@@ -163,56 +166,61 @@ class _MyHomePageState extends State<MyHomePage> {
     // Modo paisagem
     bool isLandScape = mediaQuery.orientation == Orientation.landscape;
 
-    final appBar = AppBar(
-      title: Text(
-        'Despesas Pessoais',
-        style: TextStyle(
-          fontSize: 20 * MediaQuery.textScaleFactorOf(context),
-        ),
+    Widget _getIconButton(Icon icon, Function() fn) {
+      return Platform.isIOS
+          ? GestureDetector(onTap: fn, child: icon)
+          : IconButton(onPressed: fn, icon: icon);
+    }
+
+    final actionsTopBar = <Widget>[
+      // Botão alternativo para adicionar nova transação
+      IconButton(
+        icon: const Icon(Icons.add),
+        onPressed: () => _openTransactionFormModal(context),
       ),
-      actions: <Widget>[
-        if (isLandScape)
-          // Botão alternativo para adicionar nova transação
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _openTransactionFormModal(context),
-          ),
+      if (isLandScape)
         // Botão para alternar a visualização: lista e gráfico
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            IconButton(
-              icon: _showChart
+        _getIconButton(
+          _showChart
+              // Verifica a plataforma e verificar se o icone esta ativado
+              ? Platform.isIOS
                   ? Icon(
-                      Icons.poll_rounded,
-                      color: Theme.of(context).colorScheme.secondary,
+                      CupertinoIcons.list_bullet_below_rectangle,
+                      color: Theme.of(context).colorScheme.primary,
                     )
-                  : const Icon(
-                      Icons.poll_outlined,
-                    ),
-              onPressed: () {
-                setState(() {
-                  if (_showChart) {
-                    _showChart = false;
-                  } else {
-                    _showChart = true;
-                  }
-                });
-              },
-            )
-          ],
+                  : Icon(Icons.poll_rounded,
+                      color: Theme.of(context).colorScheme.secondary)
+              : Platform.isIOS
+                  ? const Icon(CupertinoIcons.list_bullet_below_rectangle)
+                  : const Icon(Icons.poll_outlined),
+          () {
+            setState(() {
+              if (_showChart) {
+                _showChart = false;
+              } else {
+                _showChart = true;
+              }
+            });
+          },
         ),
-      ],
-    );
+    ];
+
+    final PreferredSizeWidget appBar = AppBar(
+        title: Text(
+          'Despesas Pessoais',
+          style: TextStyle(
+            fontSize: 20 * MediaQuery.textScaleFactorOf(context),
+          ),
+        ),
+        actions: actionsTopBar);
 
     // Altura - barra do app - barra de status
     final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final bodyPage = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -232,12 +240,30 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-              child: const Icon(Icons.add),
-              onPressed: () => _openTransactionFormModal(context)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+
+    if (Platform.isIOS) {
+      return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: const Text('Despesas Pessoais'),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: actionsTopBar,
+          ),
+        ),
+        child: bodyPage,
+      );
+    } else {
+      return Scaffold(
+        appBar: appBar,
+        body: bodyPage,
+        floatingActionButton: Platform.isIOS
+            ? Container()
+            : FloatingActionButton(
+                child: const Icon(Icons.add),
+                onPressed: () => _openTransactionFormModal(context)),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      );
+    }
   }
 }
