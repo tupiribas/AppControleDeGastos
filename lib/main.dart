@@ -1,6 +1,6 @@
 import 'dart:math';
+import 'dart:io';
 // ignore: depend_on_referenced_packages
-import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:expenses/components/chart.dart';
@@ -172,36 +172,35 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       actions: <Widget>[
         if (isLandScape)
-          // Botão para alternar a visualização: lista e gráfico
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              IconButton(
-                icon: _showChart
-                    ? const Icon(
-                        Icons.poll_rounded,
-                        color: Colors.amber,
-                      )
-                    : const Icon(
-                        Icons.poll_outlined,
-                        color: Colors.white,
-                      ),
-                onPressed: () {
-                  setState(() {
-                    if (_showChart) {
-                      _showChart = false;
-                    } else {
-                      _showChart = true;
-                    }
-                  });
-                },
-              )
-            ],
+          // Botão alternativo para adicionar nova transação
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _openTransactionFormModal(context),
           ),
-        // Botão alternativo para adicionar nova transação
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () => _openTransactionFormModal(context),
+        // Botão para alternar a visualização: lista e gráfico
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            IconButton(
+              icon: _showChart
+                  ? Icon(
+                      Icons.poll_rounded,
+                      color: Theme.of(context).colorScheme.secondary,
+                    )
+                  : const Icon(
+                      Icons.poll_outlined,
+                    ),
+              onPressed: () {
+                setState(() {
+                  if (_showChart) {
+                    _showChart = false;
+                  } else {
+                    _showChart = true;
+                  }
+                });
+              },
+            )
+          ],
         ),
       ],
     );
@@ -233,9 +232,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => _openTransactionFormModal(context)),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () => _openTransactionFormModal(context)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
