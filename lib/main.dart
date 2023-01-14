@@ -65,54 +65,54 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-  Transaction(
-    id: 't1',
-    title: 'Validade1',
-    value: 33.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't2',
-    title: 'Validade2',
-    value: 32.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't3',
-    title: 'Validade3',
-    value: 34.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't4',
-    title: 'Validade4',
-    value: 35.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't5',
-    title: 'Validade5',
-    value: 36.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't6',
-    title: 'Validade6',
-    value: 37.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't7',
-    title: 'Validade7',
-    value: 38000.90,
-    date: DateTime.now(),
-  ),
-  Transaction(
-    id: 't8',
-    title: 'Validade8',
-    value: 3800.90,
-    date: DateTime.now(),
-  ),
+    Transaction(
+      id: 't1',
+      title: 'Validade1',
+      value: 33.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Validade2',
+      value: 32.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Validade3',
+      value: 34.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'Validade4',
+      value: 35.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't5',
+      title: 'Validade5',
+      value: 36.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't6',
+      title: 'Validade6',
+      value: 37.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't7',
+      title: 'Validade7',
+      value: 38000.90,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't8',
+      title: 'Validade8',
+      value: 3800.90,
+      date: DateTime.now(),
+    ),
   ];
 
   bool _showChart = false;
@@ -159,9 +159,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     // Modo paisagem
-    bool isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    bool isLandScape = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: Text(
@@ -207,9 +207,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // Altura - barra do app - barra de status
-    final availableHeight = MediaQuery.of(context).size.height -
+    final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -220,12 +220,12 @@ class _MyHomePageState extends State<MyHomePage> {
             // Implementação! - Fazer a transações mensais
             if (_showChart || !isLandScape)
               SizedBox(
-                height: availableHeight * (isLandScape ? 0.7 : 0.26),
+                height: availableHeight * (isLandScape ? 0.8 : 0.26),
                 child: Chart(recentTransaction: _recentTransactions),
               ),
             if (!_showChart || !isLandScape)
               SizedBox(
-                height: availableHeight * 0.74,
+                height: availableHeight * (isLandScape ? 1 : 0.7),
                 child: TransactionList(
                     transactions: _transactions,
                     onRemove: _deleteByIdTransaction),
